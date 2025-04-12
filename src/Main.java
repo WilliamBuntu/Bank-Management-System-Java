@@ -528,7 +528,7 @@ public class Main extends Application {
 
             resultArea.setText(historyText.toString());
         } else {
-            updateStatus("Account not found", true);
+            updateStatus("Account not found ", true);
             resultArea.setText("❌ Account not found. Please check account number.");
         }
     }
