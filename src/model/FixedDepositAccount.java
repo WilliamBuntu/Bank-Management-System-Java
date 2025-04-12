@@ -3,8 +3,8 @@ package model;
 import java.time.LocalDate;
 
 public class FixedDepositAccount extends Account {
-    private LocalDate maturityDate;
-    private double interestRate;
+    private final LocalDate maturityDate;
+    private final double interestRate;
 
     public FixedDepositAccount(String accountNumber, double initialDeposit,
                                LocalDate maturityDate, double interestRate) {

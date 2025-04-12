@@ -2,6 +2,7 @@ package model;
 
 
 public abstract class Account implements IAccount {
+    protected String userName;
     protected String accountNumber;
     protected double balance;
     protected TransactionHistory transactionHistory;
@@ -10,6 +11,7 @@ public abstract class Account implements IAccount {
     public Account(String accountNumber, double initialDeposit) {
         this.accountNumber = accountNumber;
         this.balance = initialDeposit;
+//        this.userName = userName;
         this.transactionHistory = new TransactionHistory();
 
         // Record initial deposit as first transaction
