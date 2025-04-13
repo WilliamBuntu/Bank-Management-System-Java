@@ -59,7 +59,7 @@ public class Main extends Application {
 
         // Scene setup
         Scene scene = new Scene(mainLayout, 900, 600);
-        primaryStage.setTitle("Abadasigana Bank");
+        primaryStage.setTitle("Amalitech   Bank");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -83,7 +83,7 @@ public class Main extends Application {
 
         // App title
         VBox titleBox = new VBox(2);
-        Text title = new Text("Abadasigana Bank");
+        Text title = new Text("Amalitech Bank");
         title.setFont(Font.font("System", FontWeight.BOLD, 22));
         title.setFill(Color.web("#2c3e50"));
 
@@ -313,6 +313,11 @@ public class Main extends Application {
                 return;
             }
 
+            if(initialAmount<100 && accountType.equals("Savings")){
+                updateStatus("Initial deposit should be greater than 100", true);
+                return;
+            }
+
             boolean success = false;
 
             if (accountType == null) {
@@ -327,6 +332,8 @@ public class Main extends Application {
             } else if (accountType.equals("Fixed Deposit")) {
                 // Parse and validate the maturity date
                 try {
+
+
                     LocalDate maturityDate = LocalDate.parse(maturityDateField.getText(),
                             DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
@@ -347,7 +354,7 @@ public class Main extends Application {
                 updateStatus("Account created successfully", false);
                 resultArea.setText("✅ Successfully created " + accountType + " account #" + accountNumber + "\n" +
                         "Account Holder: " + userName + "\n" +
-                        "Initial Balance: $" + String.format("%.2f", initialAmount));
+                        "Initial Balance: FRW  " + String.format("%.2f", initialAmount));
             } else {
                 updateStatus("Failed to create account", true);
                 resultArea.setText("❌ Failed to create account. Account number may already exist.");
@@ -393,9 +400,9 @@ public class Main extends Application {
             if (success) {
                 double newBalance = bank.getBalance(accountNumber);
                 updateStatus("Deposit successful", false);
-                resultArea.setText(String.format("✅ Successfully deposited $%.2f\n\n" +
+                resultArea.setText(String.format("✅ Successfully deposited FRW  %.2f\n\n" +
                                 "Account: #%s (%s)\n" +
-                                "New balance: $%.2f",
+                                "New balance: FRW  %.2f",
                         amount, accountNumber, account.getAccountType(), newBalance));
             } else {
                 updateStatus("Deposit failed", true);
@@ -446,8 +453,17 @@ public class Main extends Application {
             if (amount > currentBalance && account.getAccountType().equals("Savings") ) {
                 updateStatus("Insufficient funds for withdrawal", true);
                 resultArea.setText(String.format("❌ Insufficient funds for withdrawal.\n" +
-                                "Current balance: $%.2f\n" +
-                                "Requested withdrawal: $%.2f",
+                                "Current balance: FRW  %.2f\n" +
+                                "Requested withdrawal: FRW  %.2f",
+                        currentBalance, amount));
+                return;
+            }
+
+            if(currentBalance-amount < -500 && account.getAccountType().equals("Current")){
+                updateStatus("Insufficient funds for withdrawal", true);
+                resultArea.setText(String.format("❌ Insufficient funds for withdrawal.\n" +
+                                "Current balance: FRW  %.2f\n" +
+                                "Requested withdrawal: FRW  %.2f",
                         currentBalance, amount));
                 return;
             }
@@ -457,9 +473,9 @@ public class Main extends Application {
             if (success) {
                 double newBalance = bank.getBalance(accountNumber);
                 updateStatus("Withdrawal successful", false);
-                resultArea.setText(String.format("✅ Successfully withdrew $%.2f\n\n" +
+                resultArea.setText(String.format("✅ Successfully withdrew FRW  %.2f\n\n" +
                                 "Account: #%s (%s)\n" +
-                                "New balance: $%.2f",
+                                "New balance: FRW  %.2f",
                         amount, accountNumber, account.getAccountType(), newBalance));
             } else {
                 updateStatus("Withdrawal failed", true);
@@ -487,7 +503,7 @@ public class Main extends Application {
             resultArea.setText(String.format("📊 Account Information\n\n" +
                             "Account Number: #%s\n" +
                             "Type: %s\n" +
-                            "Current Balance: $%.2f%s",
+                            "Current Balance: FRW  %.2f%s",
                     accountNumber, account.getAccountType(), balance, additionalInfo));
         } else {
             updateStatus("Failed to retrieve balance", true);
@@ -511,7 +527,7 @@ public class Main extends Application {
             historyText.append("🧾 Transaction History\n\n");
             historyText.append("Account: #").append(accountNumber)
                     .append(" (").append(account.getAccountType()).append(")\n");
-            historyText.append("Current Balance: $").append(String.format("%.2f", bank.getBalance(accountNumber))).append("\n");
+            historyText.append("Current Balance: FRW  ").append(String.format("%.2f", bank.getBalance(accountNumber))).append("\n");
 
             // Add maturity date info for Fixed Deposit accounts
             if (account.getAccountType().equals("Fixed Deposit")) {

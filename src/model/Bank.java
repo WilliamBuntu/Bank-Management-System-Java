@@ -9,6 +9,7 @@ public class Bank {
     private final Map<String, IAccount> accounts;
 
     public Bank() {
+
         this.accounts = new HashMap<>();
     }
 
